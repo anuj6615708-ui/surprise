@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading Surprise...</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#000;
+overflow:hidden;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+#loader{
+text-align:center;
+width:80%;
+max-width:500px;
+transition:1s;
+}
+
+h1{
+font-size:42px;
+margin-bottom:20px;
+}
+
+#timer{
+font-size:90px;
+font-weight:bold;
+margin:20px 0;
+}
+
+.bar{
+width:100%;
+height:20px;
+background:#333;
+border-radius:20px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#00ff66;
+transition:1s linear;
+}
+
+p{
+margin-top:20px;
+color:#aaa;
+}
+
+video{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+object-fit:cover;
+background:black;
+}
+</style>
+
+</head>
+<body>
+
+<div id="loader">
+<h1>🎁 Loading Surprise...</h1>
+
+<div id="timer">5</div>
+
+<div class="bar">
+<div class="fill" id="fill"></div>
+</div>
+
+<p>Please wait while we prepare something awesome...</p>
+</div>
+
+<video id="video" autoplay playsinline>
+<source src="video.mp4" type="video/mp4">
+</video>
+
+<script>
+
+let time=5;
+
+const timer=document.getElementById("timer");
+const fill=document.getElementById("fill");
+const loader=document.getElementById("loader");
+const video=document.getElementById("video");
+
+let progress=0;
+
+const interval=setInterval(()=>{
+
+time--;
+
+progress+=20;
+
+timer.innerHTML=time;
+
+fill.style.width=progress+"%";
+
+if(time<=0){
+
+clearInterval(interval);
+
+loader.style.opacity="0";
+
+setTimeout(()=>{
+
+loader.style.display="none";
+
+video.style.display="block";
+
+video.requestFullscreen?.();
+
+video.play().catch(()=>{});
+
+},1000);
+
+}
+
+},1000);
+
+</script>
+
+</body>
+</html>
